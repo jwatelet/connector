@@ -6,20 +6,46 @@ import akka.pattern.ask
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import connector.api.ApplicationActor
+import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.sql.SQLContext
 import spray.can.Http
 import scala.concurrent.duration._
 
-object Boot extends App {
+object Boot extends App with SparkCore {
 
-  implicit val system = ActorSystem("connector-system")
+  import Configuration.config
+
+  implicit val system = ActorSystem(config.getString("app.actor-system.name"))
   implicit val timeout = Timeout(15.seconds)
 
   val application = system.actorOf(Props[ApplicationActor], "connector-service")
-  val config = ConfigFactory.load()
 
-  IO(Http) ? Http.Bind(
+  IO(Http) ? Http.Bind (
     listener = application,
     interface = config.getString("app.server.host"),
     port = config.getInt("app.server.port")
   )
+
+}
+
+trait SparkCore {
+
+  import Configuration.config
+
+  val sparkConf = new SparkConf()
+    .setMaster(config.getString("app.spark.master-uri"))
+    .setAppName(config.getString("app.spark.app-name"))
+
+  implicit val sc = new SparkContext(sparkConf)
+  implicit val sqlContex = new SQLContext(sc)
+
+  def optionsForTable(tableName: String) = Map (
+    "driver" -> config.getString("app.database.driver"),
+    "url" -> config.getString("app.database.url"),
+    "dbtable" -> tableName
+  )
+}
+
+object Configuration {
+  val config = ConfigFactory.load()
 }

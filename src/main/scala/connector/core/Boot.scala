@@ -21,7 +21,6 @@ object Boot extends App {
   IO(Http) ? Http.Bind(
     listener = application,
     interface = config.getString("app.server.host"),
-    port = config.getInt("app.server.port"))
-
-  sys.addShutdownHook(system.shutdown())
+    port = config.getInt("app.server.port")
+  )
 }

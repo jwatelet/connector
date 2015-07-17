@@ -11,7 +11,7 @@ import org.apache.spark.sql.SQLContext
 import spray.can.Http
 import scala.concurrent.duration._
 
-object Boot extends App with SparkCore {
+object Boot extends App {
 
   import Configuration.config
 
@@ -28,7 +28,7 @@ object Boot extends App with SparkCore {
 
 }
 
-trait SparkCore {
+object SparkCore {
 
   import Configuration.config
 

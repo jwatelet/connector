@@ -9,7 +9,6 @@ import connector.api.ApplicationActor
 import spray.can.Http
 import scala.concurrent.duration._
 
-
 object Boot extends App {
 
   implicit val system = ActorSystem("connector-system")

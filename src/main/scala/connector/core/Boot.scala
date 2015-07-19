@@ -7,18 +7,23 @@ import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import connector.api.ApplicationActor
 import org.apache.spark.{SparkContext, SparkConf}
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.{DataFrame, SQLContext}
 import spray.can.Http
 import scala.concurrent.duration._
 
 object Boot extends App {
 
-  import Configuration.config
+  import Configuration._
 
   implicit val system = ActorSystem(config.getString("app.actor-system.name"))
   implicit val timeout = Timeout(15.seconds)
 
+  val sparkConf = new SparkConf()
+    .setMaster(config.getString("app.spark.master-uri"))
+    .setAppName(config.getString("app.spark.app-name"))
+
   val application = system.actorOf(Props[ApplicationActor], "connector-service")
+  val spark = system.actorOf(Props(classOf[SparkActor], sparkConf, optionsForRDBMS), "spark-app")
 
   IO(Http) ? Http.Bind (
     listener = application,
@@ -28,24 +33,13 @@ object Boot extends App {
 
 }
 
-object SparkCore {
+object Configuration {
 
-  import Configuration.config
+  val config = ConfigFactory.load()
 
-  val sparkConf = new SparkConf()
-    .setMaster(config.getString("app.spark.master-uri"))
-    .setAppName(config.getString("app.spark.app-name"))
-
-  implicit val sc = new SparkContext(sparkConf)
-  implicit val sqlContex = new SQLContext(sc)
-
-  def optionsForTable(tableName: String) = Map (
+  val optionsForRDBMS = (query: String) => Map (
     "driver" -> config.getString("app.database.driver"),
     "url" -> config.getString("app.database.url"),
-    "dbtable" -> tableName
+    "dbtable" -> query // can be either table name or select query
   )
-}
-
-object Configuration {
-  val config = ConfigFactory.load()
 }

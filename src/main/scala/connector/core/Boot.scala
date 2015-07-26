@@ -18,12 +18,8 @@ object Boot extends App {
   implicit val system = ActorSystem(config.getString("app.actor-system.name"))
   implicit val timeout = Timeout(15.seconds)
 
-  val sparkConf = new SparkConf()
-    .setMaster(config.getString("app.spark.master-uri"))
-    .setAppName(config.getString("app.spark.app-name"))
-
   val application = system.actorOf(Props[ApplicationActor], "connector-service")
-  val spark = system.actorOf(Props(classOf[SparkActor], sparkConf, optionsForRDBMS), "spark-app")
+  val tweeter = system.actorOf(Props(classOf[TweeterStreamingActor], sparkConf, optionsForRDBMS), "spark-app")
 
   IO(Http) ? Http.Bind (
     listener = application,
@@ -36,10 +32,21 @@ object Boot extends App {
 object Configuration {
 
   val config = ConfigFactory.load()
+  val twitterConf = ConfigFactory.load("twitter")
+
+  System.setProperty("twitter4j.oauth.consumerKey", twitterConf.getString("consumerKey"))
+  System.setProperty("twitter4j.oauth.consumerSecret", twitterConf.getString("consumerSecret"))
+  System.setProperty("twitter4j.oauth.accessToken", twitterConf.getString("accessToken"))
+  System.setProperty("twitter4j.oauth.accessTokenSecret", twitterConf.getString("accessTokenSecret"))
 
   val optionsForRDBMS = (query: String) => Map (
     "driver" -> config.getString("app.database.driver"),
     "url" -> config.getString("app.database.url"),
     "dbtable" -> query // can be either table name or select query
   )
+
+  val sparkConf = new SparkConf()
+    .setMaster(config.getString("app.spark.master-uri"))
+    .setAppName(config.getString("app.spark.app-name"))
+
 }

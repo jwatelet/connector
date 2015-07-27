@@ -9,9 +9,8 @@ import org.apache.spark.streaming.twitter.TwitterUtils
 class StreamingActor extends Actor with ActorLogging {
 
   val ssc = new StreamingContext(Config.sparkConf, Seconds(2))
-  val sqlContext = new SQLContext(ssc.sparkContext)
   val stream = TwitterUtils.createStream(ssc, None)
-  val db = sqlContext.read.format("jdbc").options(Config.optionsForRDBMS).load()
+  val db = new SQLContext(ssc.sparkContext).read.format("jdbc").options(Config.optionsForRDBMS).load()
 
   ssc.start()
 

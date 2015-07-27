@@ -10,7 +10,9 @@ class StreamingActor extends Actor with ActorLogging {
 
   val ssc = new StreamingContext(Config.sparkConf, Seconds(2))
   val stream = TwitterUtils.createStream(ssc, None)
-  val db = new SQLContext(ssc.sparkContext).read.format("jdbc").options(Config.optionsForRDBMS).load()
+  val customersWithKeywords = new SQLContext(ssc.sparkContext).read.format("jdbc").options(Config.optionsForRDBMS).load()
+    .map(row => (row.getString(0), List(row.getString(1))))
+    .reduceByKey(_ ++ _) // (customer, [keywords...])
 
   ssc.start()
 

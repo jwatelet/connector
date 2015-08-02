@@ -22,8 +22,7 @@ libraryDependencies ++= {
     "org.apache.spark"    %%  "spark-core"    % sparkVersion,
     "org.apache.spark"    %%  "spark-streaming"         % sparkVersion,
     "org.apache.spark"    %%  "spark-streaming-twitter" % sparkVersion,
-    "org.specs2"          %%  "specs2-core"   % "2.3.11" % "test",
-    "mysql"        %   "mysql-connector-java" % "5.1.36"
+    "org.specs2"          %%  "specs2-core"   % "2.3.11" % "test"
   )
 }
 

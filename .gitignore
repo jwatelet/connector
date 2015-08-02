@@ -9,3 +9,4 @@ test-output/
 .classpath_nb
 
 src/main/resources/twitter.conf
+src/main/resources/bower_components

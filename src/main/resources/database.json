@@ -1,5 +1,5 @@
-{"customer":"Google", "keywords": ["search", "android", "ad", "google", "youtube", "play", "maps", "docs", "music", "watch", "nexus", "phone"]}
-{"customer":"Yahoo!", "keywords": ["search", "yahoo", "ad", "finance"]}
+{"customer":"Google", "keywords": ["search", "android", "google", "youtube", "play", "maps", "docs", "music", "watch", "nexus", "phone"]}
+{"customer":"Yahoo!", "keywords": ["search", "yahoo", "finance"]}
 {"customer":"Apple", "keywords": ["pc", "computer", "apple", "maps", "iphone", "music", "phone", "laptop", "watch", "ipod", "ipad", "macbook"]}
 {"customer":"Microsoft", "keywords": ["pc", "computer", "microsoft", "docs", "windows", "office", "phone", "laptop", "tablet", "surface"]}
 {"customer":"Facebook", "keywords": ["facebook", "friend", "post", "like"]}

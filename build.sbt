@@ -11,18 +11,18 @@ libraryDependencies ++= {
   val sprayVersion = "1.3.3"
   val sparkVersion = "1.4.1"
   Seq(
-    "io.spray"            %%  "spray-can"     % sprayVersion,
-    "io.spray"            %%  "spray-routing" % sprayVersion,
-    "io.spray"            %%  "spray-json"    % "1.3.2",
-    "io.spray"            %%  "spray-testkit" % sprayVersion  % "test",
-    "com.typesafe.akka"   %%  "akka-actor"    % akkaVersion,
-    "com.typesafe.akka"   %%  "akka-testkit"  % akkaVersion   % "test",
-    "org.apache.spark"    %%  "spark-sql"     % sparkVersion,
-    "org.apache.spark"    %%  "spark-hive"    % sparkVersion,
-    "org.apache.spark"    %%  "spark-core"    % sparkVersion,
-    "org.apache.spark"    %%  "spark-streaming"         % sparkVersion,
-    "org.apache.spark"    %%  "spark-streaming-twitter" % sparkVersion,
-    "org.specs2"          %%  "specs2-core"   % "2.3.11" % "test"
+    "io.spray"               %%  "spray-can"               % sprayVersion,
+    "io.spray"               %%  "spray-routing"           % sprayVersion,
+    "io.spray"               %%  "spray-json"              % "1.3.2",
+    "io.spray"               %%  "spray-testkit"           % sprayVersion  % "test",
+    "com.typesafe.akka"      %%  "akka-actor"              % akkaVersion,
+    "com.typesafe.akka"      %%  "akka-testkit"            % akkaVersion   % "test",
+    "org.apache.spark"       %%  "spark-sql"               % sparkVersion,
+    "org.apache.spark"       %%  "spark-hive"              % sparkVersion,
+    "org.apache.spark"       %%  "spark-core"              % sparkVersion,
+    "org.apache.spark"       %%  "spark-streaming"         % sparkVersion,
+    "org.apache.spark"       %%  "spark-streaming-twitter" % sparkVersion,
+    "org.specs2"             %%  "specs2-core"             % "2.3.11" % "test"
   )
 }
 

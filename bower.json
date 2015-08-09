@@ -2,7 +2,6 @@
   "name": "connector",
   "version": "0.1",
   "dependencies": {
-    "angular": "latest",
     "bootstrap": "latest",
     "d3": "latest"
   }

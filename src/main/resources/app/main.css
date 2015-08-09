@@ -1,0 +1,9 @@
+body {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.container {
+    width: 970px;
+    max-width: none !important;
+}

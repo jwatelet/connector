@@ -12,10 +12,15 @@ trait ConnectorAPI extends HttpService {
 
   val index = pathEndOrSingleSlash {
     get {
-      getFromResource("index.html")
+      getFromResource("app/index.html")
     }
   }
 
-  val routes = index ~ getFromResourceDirectory("assets")
+  val statics = getFromResourceDirectory("app") ~
+    pathPrefix("bower_components") {
+      getFromResourceDirectory("bower_components")
+    }
+
+  val routes = index ~ statics
 }
 

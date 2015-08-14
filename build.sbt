@@ -26,4 +26,6 @@ libraryDependencies ++= {
   )
 }
 
+ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
+
 Revolver.settings

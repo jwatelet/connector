@@ -17,8 +17,8 @@ object Boot extends App {
   implicit val timeout = Timeout(15.seconds)
 
   val spark = new SparkContext(Config.sparkConf)
-  val application = system.actorOf(Props[ApplicationActor], "connector-service")
   val streamer = system.actorOf(Props(classOf[StreamingActor], spark), "connector-streamer")
+  val application = system.actorOf(Props[ApplicationActor], "connector-service")
 
 
   IO(Http) ? Http.Bind (

@@ -1,6 +1,6 @@
 package connector.api
 
-import connector.models.CassandraBuilder
+import connector.model.CassandraBuilder
 import spray.routing.{HttpService, HttpServiceActor}
 
 

@@ -1,6 +1,5 @@
 package connector.api
 
-import connector.model.CassandraBuilder
 import spray.routing.{HttpService, HttpServiceActor}
 
 
@@ -9,9 +8,6 @@ class ApplicationActor extends HttpServiceActor with ConnectorAPI {
 }
 
 trait ConnectorAPI extends HttpService {
-
-  //CassandraBuilder.start
-  //CassandraBuilder.createTable
 
   val index = pathEndOrSingleSlash {
     get {

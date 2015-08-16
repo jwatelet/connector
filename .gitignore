@@ -5,8 +5,4 @@ target/
 lib_managed/
 src_managed/
 test-output/
-*.iml
 .classpath_nb
-
-src/main/resources/twitter.conf
-src/main/resources/bower_components

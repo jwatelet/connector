@@ -30,6 +30,5 @@ object Config {
   lazy val interface = config.getString("app.server.host")
   lazy val port = config.getInt("app.server.port")
   lazy val actorSystemName = config.getString("app.actor-system.name")
-  lazy val jsonPath = config.getString("app.database.json-path")
 }
 

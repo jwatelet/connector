@@ -18,7 +18,7 @@ object Boot extends App {
 
   val spark = new SparkContext(Config.sparkConf)
   val application = system.actorOf(Props[ApplicationActor], "connector-service")
-  val streamer = system.actorOf(Props(classOf[StreamingActor], spark), "streamer")
+  val streamer = system.actorOf(Props(classOf[StreamingActor], spark), "connector-streamer")
 
 
   IO(Http) ? Http.Bind (

@@ -18,13 +18,8 @@ object Config {
   lazy val actorSystemName = config.getString("app.actor-system.name")
   lazy val jsonPath = config.getString("app.database.json-path")
 
-  lazy val optionsForRDBMS = Map (
-    "driver" -> config.getString("app.database.driver"),
-    "url" -> config.getString("app.database.url"),
-    "dbtable" -> config.getString("app.database.query")
-  )
-
   lazy val sparkConf = new SparkConf()
     .setMaster(config.getString("app.spark.master-uri"))
     .setAppName(config.getString("app.spark.app-name"))
+    .set("spark.cassandra.connection.host", config.getString("app.database.cassandra.host"))
 }

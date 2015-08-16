@@ -1,6 +1,7 @@
 package connector.streaming
 
 import akka.actor.{Actor, ActorLogging}
+import com.datastax.spark.connector.SomeColumns
 import connector.core.Config
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.SQLContext
@@ -15,15 +16,14 @@ class StreamingActor(sc: SparkContext) extends Actor with ActorLogging {
     .map(row => (row.getString(0), row.getSeq[String](1))).persist()
 
   val stream = TwitterUtils.createStream(ssc, None, filters = customersWithKeywords.keys.collect())
-  val userStatus = stream.map(status => (status.getId, status.getText.toLowerCase.split(" ")))
+  val userStatus = stream.map(status => (status.getId, status.getText.toLowerCase.split(" ")))  //status.getUser ,status.getCreatedAt, status.getGeoLocation
 
   userStatus.foreachRDD { rdd =>
     rdd
       .cartesian(customersWithKeywords)
       .map(x => (x._1._1, x._2._1, findConnections(x._1._2, x._2._2).sortWith(_._2 < _._2)))
       .filter(_._3.nonEmpty)
-      .foreach(println)
-    //.someMethodForStoringData
+      //.saveToCassandra
   }
 
   ssc.start()
@@ -53,5 +53,3 @@ private[streaming] object StreamingActor {
       if occurs != 0
     } yield (keyword, occurs)
 }
-
-

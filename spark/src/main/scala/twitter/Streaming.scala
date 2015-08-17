@@ -15,8 +15,8 @@ object Streaming {
     System.setProperty("twitter4j.oauth.accessTokenSecret", twitterConf.getString("accessTokenSecret"))
 
     val sparkConf = new SparkConf()
-      .setMaster(config.getString("app.spark.master-uri"))
-      .setAppName(config.getString("app.spark.app-name"))
+      .setMaster(config.getString("master-uri"))
+      .setAppName(config.getString("app-name"))
       .set("spark.cassandra.connection.host", config.getString("cassandra.host"))
 
     val ssc = new StreamingContext(sparkConf, Seconds(2))

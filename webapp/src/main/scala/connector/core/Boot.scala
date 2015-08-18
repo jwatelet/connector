@@ -5,7 +5,7 @@ import akka.io.IO
 import akka.pattern.ask
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
-import connector.api.ApplicationActor
+import connector.api.{TweetReaderActor, ApplicationActor}
 import spray.can.Http
 import scala.concurrent.duration._
 
@@ -16,6 +16,7 @@ object Boot extends App {
   implicit val timeout = Timeout(15.seconds)
 
   val application = system.actorOf(Props[ApplicationActor], "connector-service")
+  val readTweets = system.actorOf(Props(new TweetReaderActor(CassandraCluster.cluster)))
 
   IO(Http) ? Http.Bind (
     listener = application,

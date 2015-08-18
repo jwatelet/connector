@@ -9,6 +9,7 @@ import connector.api.ApplicationActor
 import spray.can.Http
 import scala.concurrent.duration._
 
+
 object Boot extends App {
 
   implicit val system = ActorSystem(Config.actorSystemName)
@@ -30,5 +31,10 @@ object Config {
   lazy val interface = config.getString("app.server.host")
   lazy val port = config.getInt("app.server.port")
   lazy val actorSystemName = config.getString("app.actor-system.name")
+
+  lazy val cassandraPort = config.getInt("app.database.cassandra.port")
+  lazy val cassandraHost = config.getString("app.database.cassandra.host")
+
 }
+
 
